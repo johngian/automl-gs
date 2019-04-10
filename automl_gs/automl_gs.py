@@ -1,3 +1,4 @@
+import json
 import os
 import pandas as pd
 from jinja2 import Environment, PackageLoader
@@ -152,6 +153,8 @@ def cmd():
     parser.add_argument(
         '--num_epochs',  help='Number of epochs / passes through the data when training the models. [Default: 20]', type=int, default=20)
     parser.add_argument(
+        '--col_types',  help='Mapping to override column types inferred automatically', nargs='?', type=str, default='{}')
+    parser.add_argument(
         '--gpu',  help="For non-Tensorflow frameworks and Pascal-or-later GPUs, boolean to determine whether to use GPU-optimized training methods (TensorFlow can detect it automatically) [Default: False]",
         nargs='?', type=bool, default=False)
     parser.add_argument(
@@ -171,5 +174,6 @@ def cmd():
                        num_trials=args.num_trials,
                        split=args.split,
                        num_epochs=args.num_epochs,
+                       col_types=json.loads(args.col_types),
                        gpu=args.gpu,
                        tpu_address=args.tpu_address)
